@@ -1,6 +1,5 @@
-# Udacity Deep Learning Assignments
-Assignments for Udacity Deep Learning class in Modulabs.
-
+## Udacity Deep Learning Assignments
+Assignments for udacity deep learning class in modulabs.
 Do it yourself, Compare it with your colleague.
 
 ## Notice
