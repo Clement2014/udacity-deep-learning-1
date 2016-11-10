@@ -9,8 +9,6 @@
 # 
 # The goal of this assignment is to train a skip-gram model over [Text8](http://mattmahoney.net/dc/textdata) data.
 
-# In[ ]:
-
 # These are all the modules we'll be using later. Make sure you can import them
 # before proceeding further.
 from __future__ import print_function
@@ -26,10 +24,11 @@ from six.moves import range
 from six.moves.urllib.request import urlretrieve
 from sklearn.manifold import TSNE
 
+import pdb
 
 # Download the data from the source website if necessary.
 
-# In[ ]:
+pdb.set_trace()
 
 url = 'http://mattmahoney.net/dc/'
 
@@ -48,10 +47,7 @@ def maybe_download(filename, expected_bytes):
 
 filename = maybe_download('text8.zip', 31344016)
 
-
 # Read the data into a string.
-
-# In[ ]:
 
 def read_data(filename):
   f = zipfile.ZipFile(filename)
@@ -62,10 +58,7 @@ def read_data(filename):
 words = read_data(filename)
 print('Data size %d' % len(words))
 
-
 # Build the dictionary and replace rare words with UNK token.
-
-# In[ ]:
 
 vocabulary_size = 50000
 
@@ -93,10 +86,7 @@ print('Most common words (+UNK)', count[:5])
 print('Sample data', data[:10])
 del words  # Hint to reduce memory.
 
-
 # Function to generate a training batch for the skip-gram model.
-
-# In[ ]:
 
 data_index = 0
 
@@ -135,8 +125,6 @@ for num_skips, skip_window in [(2, 1), (4, 2)]:
 
 
 # Train a skip-gram model.
-
-# In[ ]:
 
 batch_size = 128
 embedding_size = 128 # Dimension of the embedding vector.
@@ -187,8 +175,6 @@ with graph.as_default(), tf.device('/cpu:0'):
   similarity = tf.matmul(valid_embeddings, tf.transpose(normalized_embeddings))
 
 
-# In[ ]:
-
 num_steps = 100001
 
 with tf.Session(graph=graph) as session:
@@ -221,16 +207,10 @@ with tf.Session(graph=graph) as session:
         print(log)
   final_embeddings = normalized_embeddings.eval()
 
-
-# In[ ]:
-
 num_points = 400
 
 tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
 two_d_embeddings = tsne.fit_transform(final_embeddings[1:num_points+1, :])
-
-
-# In[ ]:
 
 def plot(embeddings, labels):
   assert embeddings.shape[0] >= len(labels), 'More labels than embeddings'
@@ -245,12 +225,17 @@ def plot(embeddings, labels):
 words = [reverse_dictionary[i] for i in range(1, num_points+1)]
 plot(two_d_embeddings, words)
 
+pdb.set_trace()
 
 # ---
 # 
 # Problem
 # -------
 # 
-# An alternative to Word2Vec is called [CBOW](http://arxiv.org/abs/1301.3781) (Continuous Bag of Words). In the CBOW model, instead of predicting a context word from a word vector, you predict a word from the sum of all the word vectors in its context. Implement and evaluate a CBOW model trained on the text8 dataset.
+# An alternative to Word2Vec is called [CBOW] (Continuous Bag of Words).
+# http://arxiv.org/abs/1301.3781  
+# In the CBOW model, instead of predicting a context word from a word vector, 
+# you predict a word from the sum of all the word vectors in its context. 
+# Implement and evaluate a CBOW model trained on the text8 dataset.
 # 
 # ---

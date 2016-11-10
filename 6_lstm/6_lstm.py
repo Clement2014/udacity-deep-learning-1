@@ -11,7 +11,7 @@
 # 
 # After training a skip-gram model in `5_word2vec.ipynb`, the goal of this notebook is to train a LSTM character model over [Text8](http://mattmahoney.net/dc/textdata) data.
 
-# In[ ]:
+
 
 # These are all the modules we'll be using later. Make sure you can import them
 # before proceeding further.
@@ -26,7 +26,7 @@ from six.moves import range
 from six.moves.urllib.request import urlretrieve
 
 
-# In[ ]:
+
 
 url = 'http://mattmahoney.net/dc/'
 
@@ -46,7 +46,7 @@ def maybe_download(filename, expected_bytes):
 filename = maybe_download('text8.zip', 31344016)
 
 
-# In[ ]:
+
 
 def read_data(filename):
   f = zipfile.ZipFile(filename)
@@ -60,7 +60,7 @@ print('Data size %d' % len(text))
 
 # Create a small validation set.
 
-# In[ ]:
+
 
 valid_size = 1000
 valid_text = text[:valid_size]
@@ -72,7 +72,7 @@ print(valid_size, valid_text[:64])
 
 # Utility functions to map characters to vocabulary IDs and back.
 
-# In[ ]:
+
 
 vocabulary_size = len(string.ascii_lowercase) + 1 # [a-z] + ' '
 first_letter = ord(string.ascii_lowercase[0])
@@ -98,7 +98,7 @@ print(id2char(1), id2char(26), id2char(0))
 
 # Function to generate a training batch for the LSTM model.
 
-# In[ ]:
+
 
 batch_size=64
 num_unrollings=10
@@ -153,7 +153,7 @@ print(batches2string(valid_batches.next()))
 print(batches2string(valid_batches.next()))
 
 
-# In[ ]:
+
 
 def logprob(predictions, labels):
   """Log-probability of the true labels in a predicted batch."""
@@ -186,7 +186,7 @@ def random_distribution():
 
 # Simple LSTM Model.
 
-# In[ ]:
+
 
 num_nodes = 64
 
@@ -281,7 +281,7 @@ with graph.as_default():
     sample_prediction = tf.nn.softmax(tf.nn.xw_plus_b(sample_output, w, b))
 
 
-# In[ ]:
+
 
 num_steps = 7001
 summary_frequency = 100
